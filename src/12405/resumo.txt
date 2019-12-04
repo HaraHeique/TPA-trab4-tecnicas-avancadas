@@ -1,0 +1,6 @@
+A solução consiste em caminhar nos caracteres de entrada
+e a cada caracter '.' encontrado, que significa um local de cultivo,
+adiciona um espantalho e caminha 3 spots para frente, ou seja,
+quando achar um spot de cultivo precisamos de um espantalho e
+um espantalho cobre 3 spots. Já quando achado o caracter '#', que
+significa uma região infértil, não precisamos de espantalho.
