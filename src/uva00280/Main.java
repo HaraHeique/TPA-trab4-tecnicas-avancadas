@@ -2,7 +2,6 @@
 * UVa 00280 -- Vertex
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
-package uva00280;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
