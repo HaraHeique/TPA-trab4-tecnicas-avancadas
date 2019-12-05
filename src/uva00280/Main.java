@@ -7,29 +7,41 @@ package uva00280;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Main {
 
     private static final Scanner SC = new Scanner(System.in);
 
     public static void main(String[] args) {
-        int nVertices = SC.nextInt();
-        ignoreLines(1);
+        while (true) {
+            int nVertices = SC.nextInt();
+            ignoreLines(1);
+            
+            // Stops when find the 0 number of vertices
+            if (nVertices == 0) {
+                break;
+            }
 
-        // Creates a non bidirection graph and populates it
-        Graph<Integer> graph = new Graph(false);
-        populateGraph(graph);
+            // Creates a non bidirection graph and populates it
+            Graph<Integer> graph = new Graph(false);
+            populateGraph(graph, nVertices);
 
-        // Do the analisys of the graph populated printing all the inacessible vertices
-        identifyInacessibleVertices(graph);
+            // Do the analisys of the graph populated printing all the inacessible vertices
+            identifyInacessibleVertices(graph);
+        }
     }
 
     // Define the graphs nodes and edges using the generic class Graph<T>
-    private static void populateGraph(Graph<Integer> graph) {
+    private static void populateGraph(Graph<Integer> graph, int qntVertices) {
+        
+        // First of all create the nodes/vertices before connect with the edges
+        for (int i = 1; i <= qntVertices; i++) {
+            graph.addVertex(i);
+        }
+        
+        // Connect the edges
         while (true) {
             String[] groupVertices = SC.nextLine().split(" ");
 
@@ -38,16 +50,18 @@ public class Main {
                 return;
             }
 
-            // Creates when necessary and connects the vertices
-            for (int i = 0; i < groupVertices.length - 1; i++) {
-                int destVertex = Integer.parseInt(groupVertices[i + 1]);
+            // Takes the initial vertex
+            int initialVertex = Integer.parseInt(groupVertices[0]);
+
+            // Connects the vertices with the initial vertex
+            for (int i = 1; i < groupVertices.length; i++) {
+                int destVertex = Integer.parseInt(groupVertices[i]);
 
                 if (destVertex == 0) {
                     break;
                 }
 
-                int sourceVertex = Integer.parseInt(groupVertices[i]);
-                graph.addEdge(sourceVertex, destVertex);
+                graph.addEdge(initialVertex, destVertex);
             }
         }
     }
@@ -55,37 +69,35 @@ public class Main {
     // Check and print the vertices inacessible from the one that is in analisys
     private static void identifyInacessibleVertices(Graph<Integer> graph) {
         String[] groupVerticesToCheck = SC.nextLine().split(" ");
-
-        if (groupVerticesToCheck.length <= 1 || groupVerticesToCheck[0].charAt(0) == '0') {
-            return;
-        }
-
         int nVerticesToCheck = Integer.parseInt(groupVerticesToCheck[0]);
 
         // Checking the vertices by the depth first search
         for (int i = 1; i <= nVerticesToCheck; i++) {
             int vertex = Integer.parseInt(groupVerticesToCheck[i]);
+            
+            // Get all the acessible vertices, but doesn't count the initial one
+            Set<Integer> acessibleVertices = graph.depthFirstSearch(vertex, false);
+            Set<Integer> inacessibleVertices = graph.getAllVertices();
 
-            if (graph.hasVertex(vertex)) {
-                Set<Integer> acessibleVertices = graph.depthFirstSearch();
-                Set<Integer> inacessibleVertices = graph.getAllVertices();
-
-                // Get the inacessible vertices by the difference between the two collections
-                if (inacessibleVertices.removeAll(acessibleVertices)) {
-                    output(inacessibleVertices);
-                }
-            }
+            // Get the inacessible vertices by the difference between the two collections
+            inacessibleVertices.removeAll(acessibleVertices);
+            output(inacessibleVertices);
         }
     }
 
     private static void output(Set<Integer> elements) {
         StringBuilder builder = new StringBuilder();
-        
+
+        // Getting the count of inacessible vertices
+        builder.append(elements.size());
+
+        // Getting the inacessible vertices
         for (int el : elements) {
-            builder.append(el).append(" ");
+            builder.append(" ").append(el);
         }
         
-        System.out.println(builder);
+        builder.append("\n");
+        System.out.print(builder);
     }
 
     // Ignore the number of lines in terminal
@@ -154,28 +166,53 @@ class Graph<T> {
     }
 
     public Set<T> getAllVertices() {
-        return this.edges.keySet();
+        return new LinkedHashSet(this.edges.keySet());
     }
 
-    public Set<T> depthFirstSearch() {
-        // TODO Lógica de busca em profundidade
-        Set<T> dfsElements = new LinkedHashSet();
-                
-        return dfsElements;
+    public Set<T> depthFirstSearch(T vertex, boolean countInitialVertex) {
+        Set<T> dfsVisitedElements = new LinkedHashSet();
+        
+        // Calls the function to get all visited vertices without counting the first one
+        if (this.hasVertex(vertex)) {
+            DFS_execution(vertex, dfsVisitedElements, countInitialVertex);
+        }
+
+        return dfsVisitedElements;
     }
 
-    // Prints the adjancency list of each vertex
+    private void DFS_execution(T visitedVertex, Set<T> dfsVisitedVertices, boolean addVisitedVertex) {
+        if (visitedVertex == null) {
+            return;
+        }
+
+        // Adds into the set as a visited vertex
+        if (addVisitedVertex) { dfsVisitedVertices.add(visitedVertex); }
+
+        LinkedList<T> adjacencyVertices = this.edges.get(visitedVertex);
+        for (T nextVisitedVertex : adjacencyVertices) {
+
+            // If the vertex is already in the Set is because is not necessary to call again
+            if (dfsVisitedVertices.contains(nextVisitedVertex)) {
+                continue;
+            }
+
+            DFS_execution(nextVisitedVertex, dfsVisitedVertices, true);
+        }
+    }
+
+    // Returns the adjancency list of each vertex
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
         for (T v : edges.keySet()) {
             builder.append(v.toString()).append("-> ");
+
             for (T w : edges.get(v)) {
                 builder.append(w.toString()).append("-> ");
             }
-            builder.append("null");
-            builder.append("\n");
+
+            builder.append("null\n");
         }
 
         return builder.toString();
