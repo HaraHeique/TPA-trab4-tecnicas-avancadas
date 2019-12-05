@@ -1,9 +1,9 @@
-import java.util.Scanner;
-
 /* Main.java
 * UVa 12405 -- Scarecrow
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
+
+import java.util.Scanner;
 
 public class Main {
 
