@@ -1,0 +1,8 @@
+A solução desse problema consiste numa variável para armazenar
+o valor máximo calculado sempre. A cada entrada de dados de aposta
+de uma sequência de tamanho N é calculado o maior valor entre
+a soma da entrada atual mais o valor máximo anterior desse cálculo
+e o resultado é testado com o valor máximo atual. O algoritmo atual
+é dinâmico porque a cada interação eu calculo o melhor resultado e
+armazeno esse resultado numa variável para não precisar ser recalculado
+nas interações seguintes, resultando em ganho de performance.
