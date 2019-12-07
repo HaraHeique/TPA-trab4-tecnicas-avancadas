@@ -2,7 +2,6 @@
 * UVa 10034 -- Freckles
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
-package uva10034;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,9 +21,9 @@ public class Main {
 
     public static void main(String args[]) {
         int nCases = SC.nextInt();
-        ignoreLines(2); // /n input and the blank line
+        //ignoreLines(2); // /n input and the blank line
 
-        while (nCases-- > 0) {
+        for (int i = 1; i <= nCases; i++) {
             int nFreckles = SC.nextInt();
             ignoreLines(1);
 
@@ -35,14 +34,15 @@ public class Main {
                and calculating the weight by the euclidian distance
             */
             List<Freckle> freckles = identifyAndConnectFreckles(frecklesGraph, nFreckles);
-            ignoreLines(1); // Ignore the next blank line
+            //ignoreLines(1); // Ignore the next blank line
             
             // Finds the minimum cost of ink to connect all the lines
             if (!freckles.isEmpty()) {
                 Freckle initialFreckle = freckles.get(0);
                 double cost = frecklesGraph.minimumCostConnectAllVertices(initialFreckle);
                 
-                System.out.printf("%.2f\n\n", cost);
+                System.out.printf("%.2f\n", cost);
+                if (i < nCases) { System.out.println(); }
             }
         }
     }
