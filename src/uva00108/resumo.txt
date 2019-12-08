@@ -1,0 +1,11 @@
+A solução deste problema consiste em somar as sub matrizes
+da matriz de entrada armazenando os resultados das somas
+em uma matriz de resultado. Após somar todos os valores da
+sub matriz é verificado se o resultado até então é menor do
+que a soma corrente e caso seja é necessário propagar a nova
+informação como sendo a maior. A cada interação de soma a
+variável "result" sempre armazena a maior soma das sub matrizes
+até então. No final do programa ela permanecerá com a maior soma
+sendo o resultado correto, ou seja, a cada interação obtemos o
+melhor resultado que está disponível no momento caracterizando
+um algoritmo dinâmico.
