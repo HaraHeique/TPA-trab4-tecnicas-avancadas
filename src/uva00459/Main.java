@@ -3,8 +3,6 @@
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
 
-package uva00459;
-
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
