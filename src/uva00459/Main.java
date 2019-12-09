@@ -3,6 +3,8 @@
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
 
+package uva00459;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -29,7 +31,7 @@ public class Main {
             int numberOfSubGraphs = graph.numberOfSubGraphsConnected();
             System.out.println(numberOfSubGraphs);
             
-            if (i != nCases - 1) {
+            if (i < nCases - 1) {
                 System.out.println();
             }
         }
