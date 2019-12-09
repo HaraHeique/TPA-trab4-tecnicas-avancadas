@@ -27,15 +27,13 @@ public class Main {
             Graph<Character> graph = new Graph(false);
             populateGraph(graph, largestNode);
             
-            // Count the number of subgraphs
+            // Count the number of subgraphs from the graph method and print it
             int numberOfSubGraphs = graph.numberOfSubGraphsConnected();
             System.out.println(numberOfSubGraphs);
             
-            // print the number of subgraphs
-            if(i > 0){
-                System.out.print('\n');
+            if (i != nCases - 1) {
+                System.out.println();
             }
-            System.out.println(numberOfSubGraphs);
         }
     }
 
@@ -48,9 +46,9 @@ public class Main {
         graph.addVertex(generateAlphabet('A', largestLetter));
         
         // Connect the edges
-        while (true) {
+        while (SC.hasNextLine()) {
             String edgesConnection = SC.nextLine();
-
+            
             if (edgesConnection.isEmpty()) {
                 break;
             }
@@ -100,6 +98,10 @@ class Graph<T> {
     }
 
     public void addEdge(T source, T destination) {
+        if (this.hasEdge(source, destination)) {
+            return;
+        }
+        
         if (!edges.containsKey(source)) {
             addVertex(source);
         }
