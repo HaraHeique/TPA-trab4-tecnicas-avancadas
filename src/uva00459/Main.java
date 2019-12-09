@@ -20,10 +20,8 @@ public class Main {
         int nCases = SC.nextInt();
         ignoreLines(2);
         
-        while (true) {
-            //String teste = SC.nextLine();
+        for (int i = 0; i < nCases; i++) {
             char largestNode = SC.nextLine().charAt(0);
-            //ignoreLines(1);
 
             // Populates and connect the graph vertices
             Graph<Character> graph = new Graph(false);
@@ -33,10 +31,11 @@ public class Main {
             int numberOfSubGraphs = graph.numberOfSubGraphsConnected();
             System.out.println(numberOfSubGraphs);
             
-            // Done the input
-            if (SC.hasNext()) {
-                break;
+            // print the number of subgraphs
+            if(i > 0){
+                System.out.print('\n');
             }
+            System.out.println(numberOfSubGraphs);
         }
     }
 
@@ -57,8 +56,7 @@ public class Main {
             }
 
             // Connect them
-            String line = SC.nextLine();
-            graph.addEdge(line.charAt(0), line.charAt(1));
+            graph.addEdge(edgesConnection.charAt(0), edgesConnection.charAt(1));
         }
     }
     
