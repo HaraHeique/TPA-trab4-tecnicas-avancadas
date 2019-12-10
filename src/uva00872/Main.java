@@ -3,8 +3,6 @@
 * Autores: David Vilaça, Harã Heique e Larissa Motta
  */
 
-package uva00872;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -164,11 +162,17 @@ class Graph<T> {
         return new LinkedHashSet(this.edges.keySet());
     }
 
-    public List<ArrayList<T>> permutations(String constraints[]) {
+    public List<ArrayList<T>> permutations(String constraints[]) throws Exception {
         ArrayList<T> vertices = new ArrayList(this.edges.keySet());
         List<ArrayList<T>> result = doPermutation(vertices);
+        
+        // Filter the permutations by the constraint given
         this.filterBasedOnConstraints(result, constraints);
-
+        if (result.size() > 300) {
+            throw new Exception("The numbers of orderings consistent with the "
+                                + "constraints must be less than or equal to 300.");
+        }
+        
         return result;
     }
 
@@ -214,8 +218,8 @@ class Graph<T> {
          */
         List<ArrayList<T>> removePermutations = new ArrayList();
         for (String constraint : constraints) {
-            char var1 = constraint.charAt(0);
-            char var2 = constraint.charAt(2);
+            String var1 = String.valueOf(constraint.charAt(0));
+            String var2 = String.valueOf(constraint.charAt(2));
 
             for (ArrayList<T> lstPermut : permutations) {
 
