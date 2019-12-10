@@ -1,0 +1,17 @@
+A solução deste problema inicia com a criação de um array
+de tamanho N para armazenar as mochilas e logo após armazenadas
+é ordenado para então conseguirmos caminhar por elas das menores
+para as maiores. Com isso, comparamos de duas em duas mochilas se
+possuem dimensões iguais para então acumular um contador. Se as
+mochilas forem de dimensões diferentes obtemos o valor máximo
+entre o acumulador (das mochilas anteriores) e a dimensão da mochila
+atual e reiniciamos o contador para a próxima iteração, para o
+processo ser repetido. Ao final dessa iteração teremos a quantidade
+máxima de sacolas que minimizam o número total de peças de bagagem.
+Com esse número em mãos, a saída se resume em percorrer o array
+ordenado novamente para imprimir cada dimensão de mochila que
+cabe dentro da sacola atual.
+Esse problema se caracteriza como greedy ou "guloso" porque a cada
+iteração que agimos no array a melhor decisão é tomada, como por
+exemplo no caso de obter o valor máximo, e não precisamos calcular
+todas as possibilidades para ao final escolhermos a melhor.
